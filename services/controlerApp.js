@@ -1,76 +1,47 @@
 import { readFileToRiddles, writeRiddleInDB } from "../DAL/DALriddles.js";
 
-async function getRiddels(res){
-    let resRiddle;
-        try {
-            resRiddle = await readFileToRiddles();
-        } catch (err) {
-            res.writeHead(500, { "content-type": "application/json" });
-            res.end(JSON.stringify({ err: "Faild read data." }));
-        }
-        res.writeHead(200, { "content-type": "application/json" });
-        res.end(JSON.stringify(resRiddle));
+async function getRiddels() {
+  try {
+    return await readFileToRiddles();
+  } catch (err) {
+    return false;
+  }
 }
-async function addRiddleToDB(req,res){
-    const budy = [];
-    req.on("data", (chunk)=> {
-        budy.push(chunk);
-    })
-    req.on("end", async ()=> {
-        if(req.method === "POST" && req.headers['content-type'] === 'application/json'){
-                try{
-                const data = JSON.parse(Buffer.concat(budy).toString());
-                const riddels = await readFileToRiddles();
-                data.id = riddels.length +1;
-                riddels.push(data);
-                writeRiddleInDB(riddels);
-            }catch (err) {
-                res.writeHead(500, { "content-type": "application/json" });
-                res.end(JSON.stringify({ err: "Faild write data." }));
-            }
-            res.writeHead(201, { "content-type": "application/json" });
-            res.end("The riddle added successfully!");
-        }
-        else{
-            res.end("Unsupported request")
-        }
-    })
-    req.on("eror", err => {
-        console.error("request error:" + err)
-        res.writeHead(500, {'content-type':'application/json'})
-    })
+async function addRiddleToDB(data) {
+  try {
+    const respons = await fetch("http://localhost:3100/getId");
+    data.id = await respons.json();
+    const riddels = await readFileToRiddles();
+    riddels.push(data);
+    writeRiddleInDB(riddels);
+    return true;
+  } catch (err) {
+    console.log("addRiddleToDB error massege: " + err);
+    return false;
+  }
 }
-
-function updateRiddle(){
-    const budy = [];
-    req.on("data", (chunk)=> {
-        budy.push(chunk);
-    })
-    req.on("end", async ()=> {
-        if(req.method === "POST" && req.headers['content-type'] === 'application/json'){
-                try{
-                const data = JSON.parse(Buffer.concat(budy).toString());
-                const riddels = await readFileToRiddles();
-                riddels.forEach(riddle => {
-                    if(riddle.id === data.id){
-                        riddle = data;
-                    }
-                });
-                writeRiddleInDB(riddels);
-            }catch (err) {
-                res.writeHead(500, { "content-type": "application/json" });
-                res.end(JSON.stringify({ err: "Faild write data." }));
-            }
-            res.writeHead(203, { "content-type": "application/json" });
-            res.end("The riddle added successfully!");
-        }
-        else{
-            res.end("Unsupported request")
-        }
-    })
-    req.on("eror", err => {
-        console.error("request error:" + err)
-        res.writeHead(500, {'content-type':'application/json'})
-    })
+async function updateRiddle(data) {
+  try {
+    const riddels = await readFileToRiddles();
+    let riddle = riddels.find((r) => r.id === data.id);
+    Object.assign(riddle, data);
+    writeRiddleInDB(riddels);
+    return true;
+  } catch (err) {
+    console.log("updateRiddle error massege: " + err);
+    return false;
+  }
 }
-export {getRiddels, addRiddleToDB, updateRiddle}
+async function deleteRiddle(id) {
+  try {
+    console.log(id);
+    let riddels = await readFileToRiddles();
+    riddels = riddels.filter(riddle => riddle.id !== id)
+    writeRiddleInDB(riddels);
+    return true;
+  } catch (err) {
+    console.log("deleteRiddle error massege: " + err);
+    return false;
+  }
+}
+export { getRiddels, addRiddleToDB, updateRiddle, deleteRiddle };

@@ -1,0 +1,23 @@
+{
+  "name": "riddlesserver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/israelr9897/RiddlesServer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/israelr9897/RiddlesServer/issues"
+  },
+  "homepage": "https://github.com/israelr9897/RiddlesServer#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
