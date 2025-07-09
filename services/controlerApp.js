@@ -1,4 +1,5 @@
 import { readFileToRiddles, writeRiddleInDB } from "../DAL/DALriddles.js";
+let countID = 6;
 
 async function getRiddels() {
   try {
@@ -9,8 +10,7 @@ async function getRiddels() {
 }
 async function addRiddleToDB(data) {
   try {
-    const respons = await fetch("http://localhost:3100/getId");
-    data.id = await respons.json();
+    data.id = ++countID;
     const riddels = await readFileToRiddles();
     riddels.push(data);
     writeRiddleInDB(riddels);

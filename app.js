@@ -6,16 +6,16 @@ import {
   updateRiddle,
 } from "./services/controlerApp.js";
 
-let countID = 7;
+
 const PORT = 3100;
 const app = express();
 
 app.use(express.json());
 
-app.get("/getId", (req, res) => {
-  res.send(countID);
-  countID++;
-});
+// app.get("/getId", (req, res) => {
+//   res.send(countID);
+//   countID++;
+// });
 
 app.get("/riddle", async (req, res) => {
   const data = await getRiddels();
@@ -53,7 +53,7 @@ app.put("/riddles/updateRiddle", (req, res) => {
 });
 
 app.delete("/riddles/deleteRiddle", (req, res) => {
-  if (deleteRiddle(req.body.idRiddle)) {
+  if (deleteRiddle(req.body.id)) {
     res
       .status(200, { "content-type": "application/json" })
       .json({ msg: "The riddle deleted successfully!" });
@@ -63,6 +63,10 @@ app.delete("/riddles/deleteRiddle", (req, res) => {
       .json({ msg: "Faild deleted data." });
   }
 });
+
+app.use((req, res) =>{
+  res.status(404).json({msg: "Route not find"})
+})
 
 app.listen(PORT, () => {
   console.log(`--- express server running on 'http://localhost:${PORT} ---`);
