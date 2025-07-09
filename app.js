@@ -4,8 +4,7 @@ import {
   deleteRiddle,
   getRiddels,
   updateRiddle,
-} from "./services/controlerApp.js";
-
+} from "./ctrl/riddleCtrl.js";
 
 const PORT = 3100;
 const app = express();
@@ -17,56 +16,13 @@ app.use(express.json());
 //   countID++;
 // });
 
-app.get("/riddle", async (req, res) => {
-  const data = await getRiddels();
-  if (data) {
-    res.json(data);
-  } else {
-    res
-      .status(500, { "content-type": "application/json" })
-      .json({ msg: "Faild read data." });
-  }
-});
+// app.get("/riddles", );
 
-app.post("/riddles/addRiddle", async (req, res) => {
-  if (addRiddleToDB(req.body)) {
-    res
-      .status(201, { "content-type": "application/json" })
-      .json({ msg: "The riddle added successfully!" });
-  } else {
-    res
-      .status(500, { "content-type": "application/json" })
-      .json({ msg: "Faild write data." });
-  }
-});
+// app.post("/riddles/addRiddle", );
 
-app.put("/riddles/updateRiddle", (req, res) => {
-  if (updateRiddle(req.body)) {
-    res
-      .status(205, { "content-type": "application/json" })
-      .json({ msg: "The riddle added successfully!" });
-  } else {
-    res
-      .status(500, { "content-type": "application/json" })
-      .json({ msg: "Faild update data." });
-  }
-});
+// app.put("/riddles/updateRiddle")
 
-app.delete("/riddles/deleteRiddle", (req, res) => {
-  if (deleteRiddle(req.body.id)) {
-    res
-      .status(200, { "content-type": "application/json" })
-      .json({ msg: "The riddle deleted successfully!" });
-  } else {
-    res
-      .status(500, { "content-type": "application/json" })
-      .json({ msg: "Faild deleted data." });
-  }
-});
-
-app.use((req, res) =>{
-  res.status(404).json({msg: "Route not find"})
-})
+// app.delete("/riddles/deleteRiddle");
 
 app.listen(PORT, () => {
   console.log(`--- express server running on 'http://localhost:${PORT} ---`);
