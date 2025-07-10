@@ -1,18 +1,20 @@
-import { readFileToRiddles, writeRiddleInDB } from "../DAL/DALriddles.js";
-let countID = 6;
+import { readFile, writeRiddle } from "../DAL/riddleDAL.js";
+let countID;
+let ALLRIDDLES;
 
-async function getRiddels(req, res) {
+async function initAllRiddlesAndCountId() {
+  ALLRIDDLES = await readFile();
+  countID = ALLRIDDLES.length;
+}
+
+async function getRiddles(req, res) {
   try {
-    const data = await readFileToRiddles();
-    if (data) {
-      res.json(data);
-    } else {
-      res
-        .status(500, { "content-type": "application/json" })
-        .json({ msg: "Faild read data." });
-    }
+      res.json(ALLRIDDLES);
   } catch (err) {
     console.log("get riddle error massege: " + err);
+    res
+      .status(500, { "content-type": "application/json" })
+      .json({ msg: "Faild read data." });
   }
 }
 
@@ -20,9 +22,8 @@ async function addRiddle(req, res) {
   try {
     const data = req.body;
     data.id = ++countID;
-    const riddels = await readFileToRiddles();
-    riddels.push(data);
-    writeRiddleInDB(riddels);
+    ALLRIDDLES.push(data);
+    writeRiddle(ALLRIDDLES);
     res
       .status(201, { "content-type": "application/json" })
       .json({ msg: "The riddle added successfully!" });
@@ -37,13 +38,11 @@ async function addRiddle(req, res) {
 async function updateRiddle(req, res) {
   try {
     const data = req.body;
-    const riddels = await readFileToRiddles();
-    let riddle = riddels.find((r) => r.id === data.id);
+    let riddle = ALLRIDDLES.find((r) => r.id === data.id);
     Object.assign(riddle, data);
-    writeRiddleInDB(riddels);
+    writeRiddle(ALLRIDDLES);
     res
-      .status(205, { "content-type": "application/json" })
-      .json({ msg: "The riddle added successfully!" });
+      .json({ msg: "The riddle update successfully!" });
   } catch (err) {
     console.log("updateRiddle error massege: " + err);
     res
@@ -54,9 +53,8 @@ async function updateRiddle(req, res) {
 
 async function deleteRiddle(req, res) {
   try {
-    let riddels = await readFileToRiddles();
-    riddels = riddels.filter((riddle) => riddle.id !== req.body.id);
-    writeRiddleInDB(riddels);
+    ALLRIDDLES = ALLRIDDLES.filter((riddle) => riddle.id !== req.body.id);
+    writeRiddle(ALLRIDDLES);
     res
       .status(200, { "content-type": "application/json" })
       .json({ msg: "The riddle deleted successfully!" });
@@ -67,4 +65,10 @@ async function deleteRiddle(req, res) {
       .json({ msg: "Faild deleted data." });
   }
 }
-export { getRiddels, addRiddle, updateRiddle, deleteRiddle };
+export {
+  initAllRiddlesAndCountId,
+  getRiddles,
+  addRiddle,
+  updateRiddle,
+  deleteRiddle,
+};

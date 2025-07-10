@@ -1,9 +1,16 @@
 import express from "express";
-import { getRiddels, addRiddle, updateRiddle, deleteRiddle } from "../ctrl/riddleCtrl.js";
+import {
+  getRiddles,
+  addRiddle,
+  updateRiddle,
+  deleteRiddle,
+} from "../ctrl/riddleCtrl.js";
 
 const router = express.Router();
 
-router.get("/", getRiddels);
-router.post("/addRiddle");
-router.put("/updateRiddle");
-router.delete("/deleteRiddle");
+router.get("/", getRiddles);
+router.post("/addRiddle", addRiddle);
+router.put("/updateRiddle", updateRiddle);
+router.delete("/deleteRiddle", deleteRiddle);
+
+export default router;
