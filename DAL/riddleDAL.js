@@ -1,13 +1,13 @@
 import fs from "fs/promises";
 import path from "path";
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const filePath = path.join(__dirname, '../db/riddles.txt');
+const filePath = path.join(__dirname, "../db/riddles.txt");
 
-async function readFileToRiddles() {
+async function readFile() {
   try {
     const riddles = await fs.readFile(filePath, "utf-8");
     return JSON.parse(riddles);
@@ -16,13 +16,13 @@ async function readFileToRiddles() {
   }
 }
 
-async function writeRiddleInDB(data) {
+async function writeRiddle(data) {
   try {
-    fs.writeFile(filePath, JSON.stringify(data), "utf-8", (err) => {});
+    fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8", (err) => {});
     console.log("added riddle to db");
   } catch (err) {
     console.log("CreateRiddle error massege: " + err);
   }
 }
 
-export { readFileToRiddles, writeRiddleInDB };
+export { readFile, writeRiddle };
