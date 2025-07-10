@@ -16,10 +16,10 @@ async function readFile() {
   }
 }
 
-async function writeRiddle(data) {
+function writeRiddle(data) {
   try {
     fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8", (err) => {});
-    console.log("added riddle to db");
+    console.log("The db updated successfully!");
   } catch (err) {
     console.log("CreateRiddle error massege: " + err);
   }
