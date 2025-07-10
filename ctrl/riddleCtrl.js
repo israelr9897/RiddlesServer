@@ -53,7 +53,7 @@ async function updateRiddle(req, res) {
 
 async function deleteRiddle(req, res) {
   try {
-    ALLRIDDLES = ALLRIDDLES.filter((riddle) => riddle.id !== req.body.id);
+    ALLRIDDLES = ALLRIDDLES.filter(riddle => riddle.id !== req.body.id);
     writeRiddle(ALLRIDDLES);
     res
       .status(200, { "content-type": "application/json" })
@@ -66,6 +66,7 @@ async function deleteRiddle(req, res) {
   }
 }
 export {
+  ALLRIDDLES, 
   initAllRiddlesAndCountId,
   getRiddles,
   addRiddle,

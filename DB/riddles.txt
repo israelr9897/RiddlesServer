@@ -59,7 +59,16 @@
     "name": "erfg",
     "timeLimit": "egr",
     "taskDescription": "egr",
-    "hint": "egr",
+    "hint": "eythy",
     "correctAnswer": "erg"
+  },
+  {
+    "id": 8,
+    "level": "easy",
+    "name": "sd",
+    "timeLimit": "sfd",
+    "taskDescription": "fsd",
+    "hint": "sfd",
+    "correctAnswer": "sfd"
   }
 ]
