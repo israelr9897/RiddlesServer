@@ -1,9 +1,9 @@
-import { ALLRIDDLES } from "../ctrl/riddleCtrl.js";
+import { ALLPLAYERS } from "../ctrl/playerCt.js";
 
-function idIsExists(req, res, next) {
+function playerIdIsExists(req, res, next) {
   try {
-    ALLRIDDLES.forEach((r) => {
-      if (r.id === Number(req.body.id)) {
+    ALLPLAYERS.forEach((p) => {
+      if (p.id === Number(req.params.id)) {
         next();
       }
     });
@@ -18,4 +18,4 @@ function idIsExists(req, res, next) {
   }
 }
 
-export { idIsExists };
+export { playerIdIsExists };

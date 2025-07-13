@@ -5,24 +5,23 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const filePath = path.join(__dirname, "../db/riddles.txt");
+const filePath = path.join(__dirname, "../db/");
 
-async function readFile() {
+async function readFile(fileName) {
   try {
-    const riddles = await fs.readFile(filePath, "utf-8");
+    const riddles = await fs.readFile(filePath+fileName, "utf-8");
     return JSON.parse(riddles);
   } catch (err) {
     console.log("read file error massege: " + err.message);
   }
 }
-
-function writeRiddle(data) {
+function writeFile(fileName, data) {
   try {
-    fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8", (err) => {});
+    fs.writeFile(filePath+fileName, JSON.stringify(data, null, 2), "utf-8", (err) => {});
     console.log("The db updated successfully!");
   } catch (err) {
-    console.log("CreateRiddle error massege: " + err);
+    console.log("write file error massege: " + err);
   }
 }
 
-export { readFile, writeRiddle };
+export { readFile, writeFile };

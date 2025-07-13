@@ -1,14 +1,19 @@
 import express from "express";
-import config from "./routes/config.js";
+import configRouts from "./routes/configRouts.js";
 import { initAllRiddlesAndCountId } from "./ctrl/riddleCtrl.js";
+import { config } from "dotenv";
+import { initAllPlayersAndCountId } from "./ctrl/playerCt.js";
 
-const PORT = 3100;
+config();
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 
 app.use(express.json());
-config(app);
+configRouts(app);
 
 app.listen(PORT, () => {
   console.log(`--- express server running on 'http://localhost:${PORT} ---`);
-  initAllRiddlesAndCountId()
+  initAllRiddlesAndCountId();
+  initAllPlayersAndCountId();
 });
