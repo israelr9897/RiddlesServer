@@ -1,4 +1,4 @@
-import { ALLPLAYERS } from "../ctrl/playerCt.js";
+import { ALLPLAYERS } from "../ctrl/playerCtrl.js";
 
 function playerIdIsExists(req, res, next) {
   try {

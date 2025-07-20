@@ -1,14 +1,18 @@
 import express from "express";
-import { getPlayerByID, getPlayers } from "../ctrl/playerCt.js";
+// import { getPlayerByID, getPlayers } from "../ctrl/playerCtrl.js";
 import { playerIdIsExists } from "../middleware/middlePlayer.js";
+import {
+  addPlayer,
+  getPlayerByID,
+  getPlayers,
+  updatePlayer,
+} from "../ctrl/playersDBCtrl.js";
 
 const router = express.Router();
 
 router.get("/", getPlayers);
-router.get("/:id",  getPlayerByID);
-// router.get("/:id",playerIdIsExists,  getPlayerByID);
-// router.post("/addRiddle", addRiddle);
-// router.put("/updateRiddle", updateRiddle);
-// router.delete("/deleteRiddle", deleteRiddle);
+router.get("/:id", getPlayerByID);
+router.post("/addPlayer", addPlayer);
+router.put("/:id", updatePlayer);
 
 export default router;

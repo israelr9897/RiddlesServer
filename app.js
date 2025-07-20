@@ -1,18 +1,17 @@
 import express from "express";
 import { config } from "dotenv";
 import configRouts from "./routes/configRouts.js";
-import { initAllPlayersAndCountId } from "./ctrl/playerCt.js";
-import { initRiddlesAndCountId } from "./ctrl/riddleMongoCtrl.js";
+import { initAllPlayersAndCountId } from "./ctrl/playerCtrl.js";
 
 config();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
-// app.use((req, res, next) => {
-//   console.log(req.method);
-//   next();
-// });
+app.use((req, res, next) => {
+  console.log(req.method);
+  next();
+});
 configRouts(app);
 
 app.listen(PORT, () => {
