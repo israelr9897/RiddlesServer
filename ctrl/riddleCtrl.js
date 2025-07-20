@@ -1,19 +1,21 @@
-import { readFile, writeRiddle } from "../DAL/riddleDAL.js";
+import { readFile, writeFile } from "../DAL/fsDAL.js";
+
 let countID;
 let ALLRIDDLES;
+const FILE_NAME = "riddles.txt";
 
 async function initAllRiddlesAndCountId() {
-  ALLRIDDLES = await readFile();
+  ALLRIDDLES = await readFile(FILE_NAME);
   countID = ALLRIDDLES.length;
 }
 
 async function getRiddles(req, res) {
   try {
-      res.json(ALLRIDDLES);
+    res.json(ALLRIDDLES);
   } catch (err) {
     console.log("get riddle error massege: " + err);
     res
-      .status(500, { "content-type": "application/json" })
+      .status(500)
       .json({ msg: "Faild read data." });
   }
 }
@@ -23,7 +25,7 @@ async function addRiddle(req, res) {
     const data = req.body;
     data.id = ++countID;
     ALLRIDDLES.push(data);
-    writeRiddle(ALLRIDDLES);
+    writeFile(FILE_NAME, ALLRIDDLES);
     res
       .status(201, { "content-type": "application/json" })
       .json({ msg: "The riddle added successfully!" });
@@ -40,9 +42,8 @@ async function updateRiddle(req, res) {
     const data = req.body;
     let riddle = ALLRIDDLES.find((r) => r.id === data.id);
     Object.assign(riddle, data);
-    writeRiddle(ALLRIDDLES);
-    res
-      .json({ msg: "The riddle update successfully!" });
+    writeFile(FILE_NAME, ALLRIDDLES);
+    res.json({ msg: "The riddle update successfully!" });
   } catch (err) {
     console.log("updateRiddle error massege: " + err);
     res
@@ -53,8 +54,8 @@ async function updateRiddle(req, res) {
 
 async function deleteRiddle(req, res) {
   try {
-    ALLRIDDLES = ALLRIDDLES.filter(riddle => riddle.id !== req.body.id);
-    writeRiddle(ALLRIDDLES);
+    ALLRIDDLES = ALLRIDDLES.filter((riddle) => riddle.id !== req.body.id);
+    writeFile(FILE_NAME, ALLRIDDLES);
     res
       .status(200, { "content-type": "application/json" })
       .json({ msg: "The riddle deleted successfully!" });
@@ -66,7 +67,7 @@ async function deleteRiddle(req, res) {
   }
 }
 export {
-  ALLRIDDLES, 
+  ALLRIDDLES,
   initAllRiddlesAndCountId,
   getRiddles,
   addRiddle,
