@@ -11,7 +11,7 @@ function playerIdIsExists(req, res, next) {
       .status(404, { "content-type": "application/json" })
       .json({ msg: "id isn't find" });
   } catch (err) {
-    console.log("id is exists error massege: " + err);
+    console.log("id is exists for player error massege: " + err);
     res
       .status(404, { "content-type": "application/json" })
       .json({ msg: "addRiddleToDB error massege: " + err });

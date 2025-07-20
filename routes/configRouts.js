@@ -1,4 +1,3 @@
-import express from "express";
 import riddleRouter from "./riddleRout.js";
 import playerRouter from "./playerRout.js";
 
