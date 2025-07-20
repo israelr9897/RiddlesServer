@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { db } from "../DB/db.js";
+import { db } from "../DB/dbRiddles.js";
 
 export async function getRiddlesDB() {
   return db.collection("Riddles").find().toArray();
