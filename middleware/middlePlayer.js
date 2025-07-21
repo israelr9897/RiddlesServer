@@ -1,8 +1,9 @@
-import { ALLPLAYERS } from "../ctrl/playerCtrl.js";
+import { getPlayersDB } from "../DAL/supebaseDal.js";
 
-function playerIdIsExists(req, res, next) {
+async function playerIdIsExists(req, res, next) {
   try {
-    ALLPLAYERS.forEach((p) => {
+    const players = await getPlayersDB()
+    players.forEach((p) => {
       if (p.id === Number(req.params.id)) {
         next();
       }
