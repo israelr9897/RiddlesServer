@@ -1,4 +1,3 @@
-import { ALLRIDDLES } from "../ctrl/riddleCtrl.js";
 import { getRiddlesByIdDB } from "../DAL/mongoDal.js";
 
 async function idIsExists(req, res, next) {

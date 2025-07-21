@@ -13,5 +13,9 @@ export async function addPlayerDB(player) {
 }
 
 export async function updatePlayerDB(id, data) {
-  return db.from("players").update(data).eq("id", id);
+  console.log(Number(data.time));
+  return db
+    .from("players")
+    .update({ lowestTime: Number(data.time) })
+    .eq("id", id);
 }

@@ -1,42 +1,46 @@
-import { readFile, writeFile } from "../DAL/fsDAL.js";
-let countID;
-let ALLPLAYERS;
-const FILE_NAME = "players.txt";
+import {
+  addPlayerDB,
+  getPlayerByIdDB,
+  getPlayersDB,
+  updatePlayerDB,
+} from "../DAL/supebaseDal.js";
 
-async function initAllPlayersAndCountId() {
-  ALLPLAYERS = await readFile(FILE_NAME);
-  countID = ALLPLAYERS.length;
-}
-
-async function getPlayers(req, res) {
+export async function getPlayers(req, res) {
   try {
-      res.json(ALLPLAYERS);
+    const { data } = await getPlayersDB();
+    res.json(data);
   } catch (err) {
-    console.log("get players error massege: " + err);
-    res
-      .status(500, { "content-type": "application/json" })
-      .json({ msg: "Faild read data." });
+    console.log("get players error massage: ", err);
+    res.status(500).json({ msg: err });
   }
 }
 
-function getPlayerByID(req, res) {
+export async function getPlayerByID(req, res) {
   try {
-    const id = req.params.id;
-    const player = ALLPLAYERS.find((p) => p.id === Number(id));
-    if (player) {
-      res.json(player);
-    }
+    const { data } = await getPlayerByIdDB(req.params.id);
+    res.json(data);
   } catch (err) {
-    console.log("get player by id error massege: " + err);
-    res
-      .status(500, { "content-type": "application/json" })
-      .json({ msg: "Faild read data." });
+    console.log("get player by id error massage: ", err);
+    res.status(500).json({ msg: err });
   }
 }
 
-export {
-    ALLPLAYERS,
-    getPlayers,
-    initAllPlayersAndCountId,
-    getPlayerByID
+export async function addPlayer(req, res) {
+  try {
+    await addPlayerDB(req.body);
+    res.json({ msg: "added to player" });
+  } catch (err) {
+    console.log("add player error massage: ", err);
+    res.status(500).json({ msg: err });
+  }
+}
+
+export async function updatePlayer(req, res) {
+  try {
+    await updatePlayerDB(req.params.id, req.body);
+    res.json({ msg: "update to player" });
+  } catch (err) {
+    console.log("update player error massage: ", err);
+    res.status(500).json({ msg: err });
+  }
 }

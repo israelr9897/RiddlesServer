@@ -6,7 +6,7 @@ import {
   getPlayerByID,
   getPlayers,
   updatePlayer,
-} from "../ctrl/playersDBCtrl.js";
+} from "../ctrl/playerCtrl.js";
 
 const router = express.Router();
 

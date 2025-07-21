@@ -2,33 +2,43 @@ import { ObjectId } from "mongodb";
 import { db } from "../DB/dbRiddles.js";
 
 export async function getRiddlesDB() {
-  return db.collection("Riddles").find().toArray();
+  try {
+    return db.collection("Riddles").find().toArray();
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getRiddlesByIdDB(Id) {
-  return db.collection("Riddles").find({ _id: new ObjectId(Id) });
+  try {
+    return db.collection("Riddles").find({ _id: new ObjectId(Id) });
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function insertRiddleDB(riddle) {
   try {
-    db.collection("Riddles").insertOne(riddle);
+    return db.collection("Riddles").insertOne(riddle);
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
 export async function updateRiddleDB(Id, riddle) {
   try {
-    db.collection("Riddles").updateOne({ _id: new ObjectId(Id) }, {$set: riddle});
+    return db
+      .collection("Riddles")
+      .updateOne({ _id: new ObjectId(Id) }, { $set: riddle });
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
 export async function deleteRiddleDB(Id) {
   try {
-    db.collection("Riddles").deleteOne({ _id: new ObjectId(Id) });
+    return db.collection("Riddles").deleteOne({ _id: new ObjectId(Id) });
   } catch (error) {
-    return error;
+    throw error;
   }
 }
