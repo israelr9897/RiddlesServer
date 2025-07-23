@@ -27,8 +27,8 @@ export async function getPlayerByID(req, res) {
 
 export async function addPlayer(req, res) {
   try {
-    await addPlayerDB(req.body);
-    res.json({ msg: "added to player" });
+    const player = await addPlayerDB(req.body);
+    res.json({ msg: "--- added to player ---", plId: player.id });
   } catch (err) {
     console.log("add player error massage: ", err);
     res.status(500).json({ msg: err });
@@ -38,7 +38,7 @@ export async function addPlayer(req, res) {
 export async function updatePlayer(req, res) {
   try {
     await updatePlayerDB(req.params.id, req.body);
-    res.json({ msg: "update to player" });
+    res.json({ msg: "--- update to player ---" });
   } catch (err) {
     console.log("update player error massage: ", err);
     res.status(500).json({ msg: err });
