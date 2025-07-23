@@ -9,11 +9,11 @@ export async function getPlayerByIdDB(id) {
 }
 
 export async function addPlayerDB(player) {
-  return await db.from("players").insert(player);
+  const { data } = await db.from("players").insert(player).select().single();
+  return data;
 }
 
 export async function updatePlayerDB(id, data) {
-  console.log(Number(data.time));
   return db
     .from("players")
     .update({ lowestTime: Number(data.time) })
