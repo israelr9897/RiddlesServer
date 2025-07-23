@@ -5,11 +5,26 @@ export async function getPlayersDB() {
 }
 
 export async function getPlayerByIdDB(id) {
-  return await db.from("players").select().eq("id", id);
+  const { data, error } = await db
+    .from("players")
+    .select()
+    .eq("id", id)
+    .single();
+  if (error) {
+    throw error;
+  }
+  return data;
 }
 
-export async function addPlayerDB(player) {
-  const { data } = await db.from("players").insert(player).select().single();
+export async function signupPlayerDB(player) {
+  const { data, error } = await db
+    .from("players")
+    .insert(player)
+    .select()
+    .single();
+  if (error) {
+    throw error;
+  }
   return data;
 }
 
