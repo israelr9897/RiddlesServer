@@ -1,5 +1,6 @@
 import {
-  getPlayerByIdDB,
+  getPlayerByNameDB,
+  getFiveWinPlayersDB,
   getPlayersDB,
   updatePlayerDB,
 } from "../DAL/supebaseDal.js";
@@ -13,10 +14,19 @@ export async function getPlayers(req, res) {
     res.status(500).json({ msg: err });
   }
 }
+export async function getFiveWinPlayers(req, res) {
+  try {
+    const data = await getFiveWinPlayersDB();
+    res.json(data);
+  } catch (err) {
+    console.log("get five win players error massage: ", err);
+    res.status(500).json({ msg: err });
+  }
+}
 
 export async function getPlayerByID(req, res) {
   try {
-    const player = await getPlayerByIdDB(req.params.id);
+    const player = await getPlayerByNameDB(req.params.id);
     res.json(player);
   } catch (err) {
     console.log("get player by id error massage: ", err);
