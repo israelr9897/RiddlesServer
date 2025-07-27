@@ -14,5 +14,5 @@ app.use((req, res, next) => {
 configRouts(app);
 
 app.listen(PORT, () => {
-  console.log(`--- express server running on 'http://localhost:${PORT} ---`);
+  console.log(`--- express server running on 'http://127.0.0.1::${PORT} ---`);
 });
