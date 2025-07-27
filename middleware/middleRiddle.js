@@ -1,6 +1,6 @@
 import { getRiddlesByIdDB } from "../DAL/mongoDal.js";
 
-async function idIsExists(req, res, next) {
+export async function idIsExists(req, res, next) {
   try {
     const riddle = await getRiddlesByIdDB(req.params.id);
     if (riddle) {
@@ -17,5 +17,3 @@ async function idIsExists(req, res, next) {
       .json({ msg: "addRiddleToDB error massege: " + err });
   }
 }
-
-export { idIsExists };

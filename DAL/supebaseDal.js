@@ -15,6 +15,7 @@ export async function getPlayerByNameDB(username) {
   }
   return data;
 }
+
 export async function getFiveWinPlayersDB() {
   const { data, error } = await db
     .from("players")

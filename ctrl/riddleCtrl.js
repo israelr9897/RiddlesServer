@@ -16,6 +16,7 @@ export async function getAllRiddles(req, res) {
       .json({ msg: "Faild read data." });
   }
 }
+
 export async function insertRiddle(req, res) {
   try {
     const riddle = req.body;
@@ -42,6 +43,7 @@ export async function UpdateRiddle(req, res) {
       .json({ msg: "Faild read data." });
   }
 }
+
 export async function deleteRiddle(req, res) {
   try {
     const result = await deleteRiddleDB(req.params.id);
