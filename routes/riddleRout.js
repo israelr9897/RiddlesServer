@@ -1,23 +1,27 @@
 import express from "express";
-// import {
-//   getRiddles,
-//   addRiddle,
-//   updateRiddle,
-//   deleteRiddle,
-// } from "../ctrl/riddleCtrl.js";
 import { idIsExists } from "../middleware/middleRiddle.js";
-import { getAllRiddles, insertRiddle, UpdateRiddle, deleteRiddle } from "../ctrl/riddleMongoCtrl.js";
-
+import {
+  getAllRiddles,
+  insertRiddle,
+  UpdateRiddle,
+  deleteRiddle,
+} from "../ctrl/riddleCtrl.js";
+import {
+  verifyRoleAdminMiddle,
+  verifyRoleUserMiddle,
+} from "../middleware/verifyRoleUserMiddl.js";
 
 const router = express.Router();
-// router.get("/", getRiddles);
 router.get("/", getAllRiddles);
+
+//Access Permission Checker - User
+router.use(verifyRoleUserMiddle);
 router.post("/addRiddle", insertRiddle);
-// router.post("/addRiddle", addRiddle);
-// router.use(idIsExists)
+
+
+//Access Permission Checker - Admin
+router.use(verifyRoleAdminMiddle);
 router.put("/updateRiddle/:id", UpdateRiddle);
-// router.put("/updateRiddle", updateRiddle);
 router.delete("/deleteRiddle/:id", deleteRiddle);
-// router.delete("/deleteRiddle", deleteRiddle);
 
 export default router;

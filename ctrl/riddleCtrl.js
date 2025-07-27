@@ -44,13 +44,10 @@ export async function UpdateRiddle(req, res) {
 }
 export async function deleteRiddle(req, res) {
   try {
-    console.log(req.params.id);
     const result = await deleteRiddleDB(req.params.id);
     res.json({ msg: "delete riddle" });
   } catch (err) {
     console.log("delete riddle error massege: " + err);
-    res
-      .status(500, { "content-type": "application/json" })
-      .json({ msg: "Faild read data." });
+    res.status(500).json({ msg: "Faild read data." });
   }
 }
