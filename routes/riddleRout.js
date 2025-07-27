@@ -1,5 +1,4 @@
 import express from "express";
-import { idIsExists } from "../middleware/middleRiddle.js";
 import {
   getAllRiddles,
   insertRiddle,

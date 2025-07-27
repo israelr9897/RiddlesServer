@@ -1,5 +1,5 @@
 import express from "express";
-import { signupPlayer, loginPlayer } from "../ctrl/signCtrl.js";
+import { signupPlayer, loginPlayer } from "../ctrl/authCtrl.js";
 
 const router = express.Router();
 
