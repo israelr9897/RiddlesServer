@@ -1,10 +1,10 @@
 import { getPlayersDB } from "../DAL/supebaseDal.js";
 
-async function playerIdIsExists(req, res, next) {
+export async function playerNameIsExists(req, res, next) {
   try {
     const players = await getPlayersDB()
     players.forEach((p) => {
-      if (p.id === Number(req.params.id)) {
+      if (p.username === Number(req.params.username)) {
         next();
       }
     });
@@ -18,5 +18,3 @@ async function playerIdIsExists(req, res, next) {
       .json({ msg: "addRiddleToDB error massege: " + err });
   }
 }
-
-export { playerIdIsExists };

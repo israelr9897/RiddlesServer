@@ -14,6 +14,7 @@ export async function getPlayers(req, res) {
     res.status(500).json({ msg: err });
   }
 }
+
 export async function getFiveWinPlayers(req, res) {
   try {
     const data = await getFiveWinPlayersDB();
@@ -24,7 +25,7 @@ export async function getFiveWinPlayers(req, res) {
   }
 }
 
-export async function getPlayerByID(req, res) {
+export async function getPlayerByName(req, res) {
   try {
     const player = await getPlayerByNameDB(req.params.id);
     res.json(player);
