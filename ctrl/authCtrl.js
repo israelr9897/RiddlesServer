@@ -27,8 +27,10 @@ export async function loginPlayer(req, res) {
 export async function signupPlayer(req, res) {
   try {
     const player = req.body;
+    console.log(player);
     player.hash_password = await ReturnHashPassword(player.hash_password);
     player.role = "user";
+    console.log(player.hash_password);
     const playerId = (await signupPlayerDB(player)).id;
     res.json({ msg: "--- √ successfully registered ---" });
   } catch (err) {
@@ -39,6 +41,6 @@ export async function signupPlayer(req, res) {
       return;
     }
     console.log("add player error massage: ", err);
-    res.status(500).json({ msg: err });
+    res.status(406).json({ msg: err });
   }
 }

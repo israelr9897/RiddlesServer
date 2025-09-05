@@ -10,6 +10,9 @@ import { playerNameIsExists } from "../middleware/middlePlayer.js";
 
 const router = express.Router();
 
+//Token Validator
+router.use(verifyToken);
+
 router.get("/", getPlayers);
 router.get("/fivewin", getFiveWinPlayers);
 router.get("/:username",playerNameIsExists, getPlayerByName);
