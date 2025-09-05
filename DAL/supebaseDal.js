@@ -11,6 +11,7 @@ export async function getPlayerByNameDB(username) {
     .eq("username", username)
     .single();
   if (error) {
+    console.log("error");
     throw error;
   }
   return data;
